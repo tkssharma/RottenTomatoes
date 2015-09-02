@@ -3,6 +3,7 @@ package com.alexlowe.MoviesBoxoffice.Util;
 /**
  * Created by tsharma3 on 9/1/2015.
  */
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;

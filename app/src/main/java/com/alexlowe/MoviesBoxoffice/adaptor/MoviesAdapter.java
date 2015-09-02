@@ -1,7 +1,5 @@
 package com.alexlowe.MoviesBoxoffice.adaptor;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +11,8 @@ import android.widget.TextView;
 import com.alexlowe.MoviesBoxoffice.BoxOfficeMovie;
 import com.alexlowe.MoviesBoxoffice.R;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class MoviesAdapter extends ArrayAdapter<BoxOfficeMovie> {
     public MoviesAdapter(Context context, ArrayList<BoxOfficeMovie> aMovies) {
@@ -36,7 +36,7 @@ public class MoviesAdapter extends ArrayAdapter<BoxOfficeMovie> {
         // Populate the data into the template view using the data object
         tvTitle.setText(movie.getTitle());
         tvCriticsScore.setText("Score: " + movie.getCriticsScore() + "%");
-        tvCast.setText(movie.getCastList());
+        tvCast.setText((CharSequence) movie.getCastList());
         Picasso.with(getContext()).load(movie.getPosterUrl()).into(ivPosterImage);
         // Return the completed view to render on screen
         return convertView;

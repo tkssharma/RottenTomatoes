@@ -1,9 +1,8 @@
 package com.alexlowe.MoviesBoxoffice;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,42 +13,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.alexlowe.MoviesBoxoffice.DbHelper.SQLiteHandler;
-import com.alexlowe.MoviesBoxoffice.R;
-import com.alexlowe.MoviesBoxoffice.Util.AlertDialogManager;
-import com.alexlowe.MoviesBoxoffice.Util.Const;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import android.widget.AdapterView.OnItemClickListener;
 
 public class BoxOfficeActivity extends AppCompatActivity {
 
     public static final String MOVIE_DETAIL_KEY = "movie";
-
-    private SQLiteHandler db;
     private static final String TAG = BoxOfficeActivity.class.getSimpleName();
+    private SQLiteHandler db;
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
     private Context mContext;
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +46,7 @@ public class BoxOfficeActivity extends AppCompatActivity {
         drawerToggle = setupDrawerToggle();
         db = new SQLiteHandler(mContext);
         // Tie DrawerLayout events to the ActionBarToggle
-            mDrawer.setDrawerListener(drawerToggle);
+        mDrawer.setDrawerListener(drawerToggle);
 
         // Find our drawer view
         // Find our drawer view
@@ -87,7 +68,6 @@ public class BoxOfficeActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -106,8 +86,14 @@ public class BoxOfficeActivity extends AppCompatActivity {
                 searchItem.collapseActionView();
                 // Set activity title to search query
                 BoxOfficeActivity.this.setTitle(query);
-              //  fetchBoxOfficeMovies(Const.FETCH_SEARCH_RESULT, query);
-
+                //  fetchBoxOfficeMovies(Const.FETCH_SEARCH_RESULT, query);
+                bundle = new Bundle();
+                bundle.putString("search_key", query);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                searchResults fragment = new searchResults();
+                fragment.setArguments(bundle);
+                fragmentTransaction.replace(R.id.flContent, fragment).commit();
 
                 return true;
             }
@@ -119,7 +105,6 @@ public class BoxOfficeActivity extends AppCompatActivity {
         });
         return true;
     }
-
 
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -151,16 +136,18 @@ public class BoxOfficeActivity extends AppCompatActivity {
                 fragmentClass = FavouriteMovies.class;
                 break;
             case R.id.nav_third_fragment:
-                fragmentClass = Latestfeeds.class;
+                fragmentClass = ListsavedMovies.class;
                 break;
             case R.id.nav_forth_fragment:
-                fragmentClass = ListsavedMovies.class;
+                fragmentClass = searchResults.class;
+
                 break;
             default:
                 fragmentClass = ListsavedMovies.class;
         }
         try {
             fragment = (Fragment) fragmentClass.newInstance();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

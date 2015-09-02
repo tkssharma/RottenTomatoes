@@ -2,9 +2,8 @@ package com.alexlowe.MoviesBoxoffice;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,11 +28,12 @@ import java.util.ArrayList;
 public class Latestfeeds extends Fragment {
 
     public static final String MOVIE_DETAIL_KEY = "movie";
+    private static final String TAG = BoxOfficeActivity.class.getSimpleName();
     ArrayList<BoxOfficeMovie> aMovies;
     private ListView lvMovies;
     private MoviesAdapter adapterMovies;
     private RtClient client;
-    private static final String TAG = BoxOfficeActivity.class.getSimpleName();
+
     public Latestfeeds() {
         // Required empty public constructor
     }
@@ -43,10 +43,10 @@ public class Latestfeeds extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_latestfeeds, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_latestfeeds, container, false);
         aMovies = new ArrayList<BoxOfficeMovie>();
         adapterMovies = new MoviesAdapter(getActivity(), aMovies);
-        lvMovies = (ListView)rootView.findViewById(R.id.lvMovies);
+        lvMovies = (ListView) rootView.findViewById(R.id.lvMovies);
         setupMovieSelectedListener();
         fetchBoxOfficeMovies(Const.FETCH_MOVIES, "");
 
@@ -63,7 +63,8 @@ public class Latestfeeds extends Fragment {
             }
         });
     }
-    private void fetchBoxOfficeMovies(String url,String query) {
+
+    private void fetchBoxOfficeMovies(String url, String query) {
         final ProgressDialog dialog = new ProgressDialog(getActivity());
         dialog.setTitle("Loading...");
         dialog.setMessage("Please wait.");
