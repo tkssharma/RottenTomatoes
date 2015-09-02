@@ -48,11 +48,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_SAVED_MOVIES_TABLE = "CREATE TABLE  IF NOT EXISTS " + TABLE_SAVED_MOVIES + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_MOVIE_SAVED + " TEXT,"+ SCORE + " TEXT ," + IMAGE + " TEXT "+")";
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_MOVIE_SAVED + " TEXT," + SCORE + " TEXT ," + IMAGE + " TEXT " + ")";
         db.execSQL(CREATE_SAVED_MOVIES_TABLE);
 
         String CREATE_FAV_MOVIES_TABLE = "CREATE  TABLE IF NOT EXISTS " + TABLE_FAV_MOVIES + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_MOVIE_FAV + " TEXT,"+ SCORE + " TEXT ," + IMAGE + " TEXT "+")";
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_MOVIE_FAV + " TEXT," + SCORE + " TEXT ," + IMAGE + " TEXT " + ")";
         db.execSQL(CREATE_FAV_MOVIES_TABLE);
 
         Log.d(TAG, "Database tables created");
@@ -71,8 +71,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     /**
      * Storing user details in database
-     * */
-    public void addMovie_saved(String name , String score,String url) throws SQLException{
+     */
+    public void addMovie_saved(String name, String score, String url) throws SQLException {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -86,7 +86,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Log.d(TAG, "New user inserted into sqlite: " + id);
     }
 
-    public void addMovie_fav(String name, String score,String url) throws SQLException {
+    public void addMovie_fav(String name, String score, String url) throws SQLException {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -102,53 +102,53 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     /**
      * Getting user data from database
-     * */
+     */
     public ArrayList<HashMap<String, String>> getSavedMovieDetails() {
 
         String selectQuery = "SELECT  * FROM " + TABLE_SAVED_MOVIES;
 
-        ArrayList<HashMap<String, String>> savedMovie  = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> savedMovie = new ArrayList<HashMap<String, String>>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         // Move to first row
         cursor.moveToFirst();
-        if (cursor.moveToFirst())
-        {
-            do
-            {
+        if (cursor.moveToFirst()) {
+            do {
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put("id", cursor.getString(0));
                 map.put("name", cursor.getString(1));
+                map.put("score", cursor.getString(2));
+                map.put("image", cursor.getString(3));
                 savedMovie.add(map);
             } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
         // return user
-        Log.d(TAG, "Fetching user from Sqlite: " + savedMovie.toString());
+        Log.i(TAG, "Fetching user from Sqlite: " + savedMovie.toString());
 
         return savedMovie;
     }
 
-    public ArrayList<HashMap<String, String>>  getFavMovieDetails() {
+    public ArrayList<HashMap<String, String>> getFavMovieDetails() {
 
 
         String selectQuery = "SELECT  * FROM " + TABLE_FAV_MOVIES;
 
-        ArrayList<HashMap<String, String>> favMovie  = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> favMovie = new ArrayList<HashMap<String, String>>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         // Move to first row
         cursor.moveToFirst();
-        if (cursor.moveToFirst())
-        {
-            do
-            {
+        if (cursor.moveToFirst()) {
+            do {
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put("id", cursor.getString(0));
                 map.put("name", cursor.getString(1));
+                map.put("score", cursor.getString(2));
+                map.put("image", cursor.getString(3));
                 favMovie.add(map);
             } while (cursor.moveToNext());
         }
@@ -162,7 +162,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     /**
      * Getting user login status return true if rows are there in table
-     * */
+     */
     public int getRowCount() {
         String countQuery = "SELECT  * FROM " + TABLE_SAVED_MOVIES;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -177,7 +177,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     /**
      * Re crate database Delete all tables and create them again
-     * */
+     */
     public void deleteSavedMovies() {
         SQLiteDatabase db = this.getWritableDatabase();
         // Delete All Rows

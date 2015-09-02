@@ -1,12 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
-    android:orientation="vertical"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
     <include
         layout="@layout/toolbar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -115,13 +116,13 @@
                     android:text="This is a story about a protagonist defeating an antagonist" />
             </LinearLayout>
         </ScrollView>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingLeft="8dp"
             android:paddingRight="8dp">
-
 
 
             <!-- When only one child of LinearLayout uses weight value it will absorb all
@@ -131,17 +132,17 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:layout_weight="1"
-                android:gravity="center_vertical|right">
+                android:gravity="center_vertical|right"
+                android:orientation="horizontal">
 
                 <ImageView
 
                     android:id="@+id/likebutton"
                     android:layout_width="@dimen/feed_item_like_pic"
                     android:layout_height="@dimen/feed_item_like_pic"
-                    android:src="@drawable/ic_heart_small_blue"
-                    android:longClickable="true" />
+                    android:longClickable="true"
+                    android:src="@drawable/ic_heart_small_blue" />
 
 
                 <TextSwitcher
@@ -157,12 +158,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="123 likes"
-                        android:textColor="@color/text_like_counter"/>
+                        android:textColor="@color/text_like_counter" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_like_counter"/>
+                        android:textColor="@color/text_like_counter" />
 
                 </TextSwitcher>
 
